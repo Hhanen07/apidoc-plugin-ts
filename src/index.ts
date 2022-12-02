@@ -222,7 +222,8 @@ function setInterfaceElements (
       : `\`${typeDef}\``
 
     // Set property type as a string
-    const propTypeName = prop.getType().getText()
+    // We pass the flag in getText due to this issue https://github.com/dsherret/ts-morph/issues/453
+    const propTypeName = prop.getType().getText(undefined, ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope)
     const typeEnum = getPropTypeEnum(prop)
     const propLabel = getPropLabel(typeEnum, propTypeName)
     // Set the element
@@ -286,7 +287,12 @@ function setObjectElements<NodeType extends ts.Node = ts.Node> (
     const isUserDefinedProperty = isUserDefinedSymbol(property.compilerSymbol)
     if (!isUserDefinedProperty) return // We don't want to include default members in the docs
 
-    const documentationComments = property.compilerSymbol.getDocumentationComment(undefined).map((node) => node.text).join()
+    let documentationComments = ''
+    // We pass undefined to getDocumentationComment but a checker is needed
+    // Due to this sometimes it fails throwing "Cannot read property 'getTypeAtLocation' of undefined" at ./apidoc-plugin-ts/node_modules/typescript/lib/typescript.js:121727:41
+    try {
+      documentationComments = property.compilerSymbol.getDocumentationComment(undefined).map((node) => node.text).join()
+    } catch (err) {}
 
     const desc = documentationComments
       ? `\`${typeDef}.${propName}\` - ${documentationComments}`
