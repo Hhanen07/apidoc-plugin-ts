@@ -222,7 +222,8 @@ function setInterfaceElements (
       : `\`${typeDef}\``
 
     // Set property type as a string
-    const propTypeName = prop.getType().getText()
+    // We pass the flag in getText due to this issue https://github.com/dsherret/ts-morph/issues/453
+    const propTypeName = prop.getType().getText(undefined, ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope)
     const typeEnum = getPropTypeEnum(prop)
     const propLabel = getPropLabel(typeEnum, propTypeName)
     // Set the element
