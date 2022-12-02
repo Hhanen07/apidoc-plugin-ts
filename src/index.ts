@@ -293,7 +293,7 @@ function setObjectElements<NodeType extends ts.Node = ts.Node> (
     try {
       documentationComments = property.compilerSymbol.getDocumentationComment(undefined).map((node) => node.text).join()
     } catch (err) {
-      console.warn(err)
+      this.log.warn(err)
     }
 
     const desc = documentationComments
