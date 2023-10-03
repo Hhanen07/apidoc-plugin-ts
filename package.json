@@ -8,13 +8,14 @@
   ],
   "scripts": {
     "apidoc": "apidoc -i test/ -o test/out",
-    "copy:plugin": "rm -rf node_modules/apidoc-plugin-ts && ln -s ../../ node_modules/apidoc-plugin-ts",
+    "copy:plugin": "rm -rf node_modules/apidoc-plugin-ts && ln -s ../ node_modules/apidoc-plugin-ts",
     "lint": "tslint --project tsconfig.json",
     "test": "yarn test-no-compile",
     "test-no-compile": "cd test && mocha test.ts --opts='./mocha.opts'; cd ..",
     "build": "rm -rf dist && tsc -p src/tsconfig.json",
     "prepublishOnly": "run-s build lint test",
-    "pretest": "rm -rf test/out && run-s build copy:plugin"
+    "pretest": "rm -rf test/out && run-s build copy:plugin",
+    "start": "npm run build && npm run copy:plugin && npm run apidoc"
   },
   "authors": [
     "Tom Grey",

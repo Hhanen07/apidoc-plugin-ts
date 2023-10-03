@@ -1,14 +1,15 @@
 interface SquareConfig {
-  color: string
-  width: number
+  color: string;
+  width: number;
 }
 
 interface SquareConfigsInterface {
-  squares: SquareConfig[]
+  squares: SquareConfig[];
+  logs?: string[];
 }
 
 interface SquareConfigsGeneric {
-  squares: Array<SquareConfig>
+  squares: Array<SquareConfig>;
 }
 
 /**
