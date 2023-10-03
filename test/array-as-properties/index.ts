@@ -8,6 +8,12 @@ interface SquareConfigsInterface {
   logs?: string[];
 }
 
+interface QueryInterface {
+  /** optional test description */
+  optional_test?: string;
+  /** required test description */
+  required_test: string;
+}
 interface SquareConfigsGeneric {
   squares: Array<SquareConfig>;
 }
@@ -15,7 +21,7 @@ interface SquareConfigsGeneric {
 /**
  * @api {get} /api/:id
  * @apiParam {SquareConfig} id Unique ID.
- * @apiSuccessInterface {SquareConfigsInterface}
+ * @apiSuccessInterface {QueryInterface}
  * @apiGroup arrayAsInterface
  */
 

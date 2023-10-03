@@ -306,6 +306,7 @@ function setInterfaceElements(
   matchedInterface.getProperties().forEach((prop: PropertySignature) => {
     // Set param type definition and description
     const typeDef = inttype ? `${inttype}.${prop.getName()}` : prop.getName();
+
     const documentationComments = prop
       .getJsDocs()
       .map((node) => node.getInnerText())
@@ -325,9 +326,10 @@ function setInterfaceElements(
     const typeEnum = getPropTypeEnum(prop);
     const propLabel = getPropLabel(typeEnum, propTypeName);
     // Set the element
-    newElements.push(
-      getApiElement(values.element, `{${propLabel}} ${typeDef} ${description}`)
-    );
+    const elementDefinition = prop.hasQuestionToken()
+      ? `{${propLabel}} [${typeDef}] ${description}`
+      : `{${propLabel}} ${typeDef} ${description}`;
+    newElements.push(getApiElement(values.element, elementDefinition));
 
     // If property is an object or interface then we need to also display the objects properties
     if ([PropType.Object, PropType.Array].includes(typeEnum)) {
