@@ -5,7 +5,6 @@ interface SquareConfig {
 
 interface SquareConfigsInterface {
   squares: SquareConfig[];
-  logs?: string[];
 }
 
 interface QueryInterface {
@@ -21,7 +20,7 @@ interface SquareConfigsGeneric {
 /**
  * @api {get} /api/:id
  * @apiParam {SquareConfig} id Unique ID.
- * @apiSuccessInterface {QueryInterface}
+ * @apiSuccessInterface {SquareConfigsInterface}
  * @apiGroup arrayAsInterface
  */
 
